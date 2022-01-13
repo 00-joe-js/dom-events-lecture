@@ -6,6 +6,9 @@ const createAnotherElement = (whatItShouldSay) => {
   const newH2 = document.createElement("h2");
   newH2.innerText = whatItShouldSay;
   document.body.appendChild(newH2);
+  newH2.addEventListener('click', function () {
+    console.log("hi!");
+  });
 };
 
 h1Element.addEventListener("click", function (eventDetails) {
@@ -31,9 +34,9 @@ mainElement.addEventListener("click", function (eventObject) {
   console.log("MAIN ELEMENT LOG");
 });
 
-document.body.addEventListener("click", function (banana) {
-  createAnotherElement("You missed!");
-});
+// document.body.addEventListener("click", function (banana) {
+//   createAnotherElement("You missed!");
+// });
 
 window.addEventListener("keydown", (keyboardEvent) => {
   createAnotherElement("you typed on the body!");
@@ -55,3 +58,30 @@ document.querySelector("#text-input").addEventListener("keydown", (e) => {
 // h1Element.addEventListener("mouseleave", function () {
 //   console.log("I have left!");
 // });
+
+// Event delegation examples below ---
+
+const group = document.querySelector("#button-group");
+
+group.addEventListener("click", function (event) {
+
+  console.log(this);
+
+  const isFirst = event.target.innerText === "First";
+  const isSecond = event.target.innerText === "Second";
+  const isThird = event.target.innerText === "Third";
+
+  if (isFirst) {
+    console.log("First button clicked!");
+    const newButton = document.createElement("button");
+    newButton.innerText = "Whatever";
+    group.appendChild(newButton);
+  } else if (isSecond) {
+    console.log("Woohoo!");
+  } else if (isThird) {
+    console.log("Number three milord");
+  } else {
+    console.log(event.target.innerText);
+  }
+  
+});
